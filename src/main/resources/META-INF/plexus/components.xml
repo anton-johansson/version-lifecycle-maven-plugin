@@ -1,0 +1,55 @@
+<!--
+
+    Copyright (c) Anton Johansson <hello@anton-johansson.com>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<component-set>
+    <components>
+        <component>
+            <role>org.apache.maven.lifecycle.Lifecycle</role>
+            <role-hint>version</role-hint>
+            <implementation>org.apache.maven.lifecycle.Lifecycle</implementation>
+            <configuration>
+                <id>version</id>
+                <phases>
+                    <phase>version-validate</phase>
+                    <phase>version-prepare-release</phase>
+                    <phase>version-prepare-release-version</phase>
+                    <phase>version-prepare-release-tag</phase>
+                    <phase>version-process-release</phase>
+                    <phase>version-commit-release</phase>
+                    <phase>version-prepare-snapshot</phase>
+                    <phase>version-prepare-snapshot-version</phase>
+                    <phase>version-prepare-snapshot-tag</phase>
+                    <phase>version-process-snapshot</phase>
+                    <phase>version-commit-snapshot</phase>
+                    <phase>version-summary</phase>
+                    <phase>version</phase>
+                </phases>
+                <default-phases>
+                    <version-prepare-release>com.anton-johansson:version-lifecycle-maven-plugin:prepare-release</version-prepare-release>
+                    <version-prepare-release-version>org.codehaus.mojo:versions-maven-plugin:2.7:set</version-prepare-release-version>
+                    <version-prepare-release-tag>org.codehaus.mojo:versions-maven-plugin:2.7:set-scm-tag</version-prepare-release-tag>
+                    <version-commit-release>com.anton-johansson:version-lifecycle-maven-plugin:commit-release</version-commit-release>
+                    <version-prepare-snapshot>com.anton-johansson:version-lifecycle-maven-plugin:prepare-snapshot</version-prepare-snapshot>
+                    <version-prepare-snapshot-version>org.codehaus.mojo:versions-maven-plugin:2.7:set</version-prepare-snapshot-version>
+                    <version-prepare-snapshot-tag>org.codehaus.mojo:versions-maven-plugin:2.7:set-scm-tag</version-prepare-snapshot-tag>
+                    <version-commit-snapshot>com.anton-johansson:version-lifecycle-maven-plugin:commit-snapshot</version-commit-snapshot>
+                    <version-summary>com.anton-johansson:version-lifecycle-maven-plugin:summary</version-summary>
+                </default-phases>
+            </configuration>
+        </component>
+    </components>
+</component-set>

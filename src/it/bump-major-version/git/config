@@ -1,0 +1,10 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[user]
+	name = Some User
+	email = some.user@gmail.com
+[commit]
+        gpgsign = false
