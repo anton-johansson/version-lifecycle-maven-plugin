@@ -28,7 +28,7 @@ $ mvn version -Dpatch
 
 ## Inspiration
 
-This plugin has gotten a lot of inspiration from the `npm version` command, which is a great tool for managing your versions.
+This plugin has gotten a lot of inspiration from the `npm version` command, which is a great tool for managing your versions. It's also inspired by [Versions Maven Plugin](https://www.mojohaus.org/versions-maven-plugin/) and actually uses some of its goals as the default goals for some of the lifecycle phases.
 
 
 ## Assumptions
