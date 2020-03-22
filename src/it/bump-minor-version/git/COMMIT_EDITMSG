@@ -11,4 +11,5 @@ Initial commit
 # Changes to be committed:
 #	new file:   .gitignore
 #	new file:   pom.xml
+#	new file:   prepare.groovy
 #

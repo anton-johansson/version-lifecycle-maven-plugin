@@ -36,35 +36,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.coderplus.maven.plugins</groupId>
-                <artifactId>copy-rename-maven-plugin</artifactId>
-                <version>1.0.1</version>
-                <executions>
-                    <execution>
-                        <id>move-git-directory-in-place</id>
-                        <phase>version-validate</phase>
-                        <goals>
-                            <goal>rename</goal>
-                        </goals>
-                        <configuration>
-                            <sourceFile>${basedir}/git</sourceFile>
-                            <destinationFile>${basedir}/.git</destinationFile>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>move-gitignore-in-place</id>
-                        <phase>version-validate</phase>
-                        <goals>
-                            <goal>rename</goal>
-                        </goals>
-                        <configuration>
-                            <sourceFile>${basedir}/gitignore</sourceFile>
-                            <destinationFile>${basedir}/.gitignore</destinationFile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>@project.groupId@</groupId>
                 <artifactId>@project.artifactId@</artifactId>
                 <version>@project.version@</version>

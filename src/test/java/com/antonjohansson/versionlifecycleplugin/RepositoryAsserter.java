@@ -36,19 +36,9 @@ public final class RepositoryAsserter
 {
     private final Git git;
 
-    // Prevent instantiation
     private RepositoryAsserter(Git git)
     {
         this.git = git;
-    }
-
-    /**
-     * ASD
-     * @param message asd
-     */
-    public static void log(String message)
-    {
-        System.err.println(message);
     }
 
     /**

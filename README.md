@@ -1,5 +1,7 @@
 # Version lifecycle plugin
 
+[![CircleCI](https://img.shields.io/circleci/build/gh/anton-johansson/version-lifecycle-maven-plugin?style=for-the-badge)](https://circleci.com/gh/anton-johansson/version-lifecycle-maven-plugin)
+
 This Maven plugin aims to provide a better experience regarding version management in Maven. It does this by introducing a new lifecycle. This allows to bump major, minor or patch version numbers with a simple command while still being able to run other plugins during the creation of the version. Output generated from these plugins can easily be added and included in the release tag.
 
 
