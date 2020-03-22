@@ -28,11 +28,11 @@ import org.eclipse.jgit.api.Git;
 @Mojo(name = "commit-release")
 public class CommitReleaseMojo extends AbstractVersionMojo
 {
-    @Parameter(name = "commitReleaseMessagePattern", property = "commitReleaseMessagePattern", defaultValue = "[version]")
-    private String commitReleaseMessagePattern;
+    @Parameter(name = "releaseCommitMessagePattern", property = "version.releaseCommitMessagePattern", defaultValue = "[version]")
+    private String releaseCommitMessagePattern;
 
-    @Parameter(name = "filePatternsToAdd", property = "filePatternsToAdd", defaultValue = ".")
-    private List<String> filePatternsToAdd;
+    @Parameter(name = "releaseFilePatternsToAdd", property = "version.releaseFilePatternsToAdd", defaultValue = ".")
+    private List<String> releaseFilePatternsToAdd;
 
     @Override
     public void execute() throws MojoExecutionException
@@ -41,10 +41,10 @@ public class CommitReleaseMojo extends AbstractVersionMojo
 
         String version = getVersion();
         String tag = getTag();
-        String message = commitReleaseMessagePattern.replace("[version]", version);
+        String message = releaseCommitMessagePattern.replace("[version]", version);
 
-        getLog().info("Adding files to commit with patterns: " + filePatternsToAdd);
-        add(repository, filePatternsToAdd);
+        getLog().info("Adding files to commit with patterns: " + releaseFilePatternsToAdd);
+        add(repository, releaseFilePatternsToAdd);
 
         getLog().info("Committing release version with message: " + message);
         commit(repository, message);

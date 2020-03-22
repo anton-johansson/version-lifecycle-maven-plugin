@@ -28,11 +28,11 @@ import org.eclipse.jgit.api.Git;
 @Mojo(name = "commit-snapshot")
 public class CommitSnapshotMojo extends AbstractVersionMojo
 {
-    @Parameter(name = "commitSnapshotMessagePattern", property = "commitSnapshotMessagePattern", defaultValue = "Preparing for the next development iteration")
-    private String commitSnapshotMessagePattern;
+    @Parameter(name = "snapshotCommitMessagePattern", property = "version.snapshotCommitMessagePattern", defaultValue = "Preparing for the next development iteration")
+    private String snapshotCommitMessagePattern;
 
-    @Parameter(name = "filePatternsToAdd", property = "filePatternsToAdd", defaultValue = ".")
-    private List<String> filePatternsToAdd;
+    @Parameter(name = "snapshotFilePatternsToAdd", property = "version.snapshotFilePatternsToAdd", defaultValue = ".")
+    private List<String> snapshotFilePatternsToAdd;
 
     @Override
     public void execute() throws MojoExecutionException
@@ -40,10 +40,10 @@ public class CommitSnapshotMojo extends AbstractVersionMojo
         Git repository = repository();
 
         String version = getVersion();
-        String message = commitSnapshotMessagePattern.replace("[version]", version);
+        String message = snapshotCommitMessagePattern.replace("[version]", version);
 
-        getLog().info("Adding files to commit with patterns: " + filePatternsToAdd);
-        add(repository, filePatternsToAdd);
+        getLog().info("Adding files to commit with patterns: " + snapshotFilePatternsToAdd);
+        add(repository, snapshotFilePatternsToAdd);
 
         getLog().info("Committing snapshot with message: " + message);
         commit(repository, message);
