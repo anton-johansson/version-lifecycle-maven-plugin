@@ -33,9 +33,10 @@ This plugin has gotten a lot of inspiration from the `npm version` command, whic
 
 ## Assumptions
 
-This project tries to not asume too much about your work flow, but there are a few things that it does assume:
+This project tries to not asume too much about your work flow, but it does assume a few things. It assumes that...
 
-* You are using Git as your version control
+* ... you are using Git as your version control system.
+* ... artifacts will be published either by a CI tool or manually after the release is created. This lifecycle has no relation to the `deploy` lifecycle phase.
 
 
 ## The lifecycle
