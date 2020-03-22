@@ -59,6 +59,22 @@ Here is an explained table of the whole lifecycle:
 | version                          | Does nothing. Its sole purpose is to provide a neat command to create new versions.                           |
 
 
+## Parameters
+
+| Name                           | Property                               | Default value                                  | Description                                                                                                          |
+| ------------------------------ | -------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `major`                        |                                        |                                                | Triggers a major version bump. Mutually exclusive with `minor` and `patch`.                                          |
+| `minor`                        |                                        |                                                | Triggers a major version bump. Mutually exclusive with `major` and `patch`.                                          |
+| `patch`                        |                                        |                                                | Triggers a major version bump. Mutually exclusive with `major` and `minor`.                                          |
+| `tagPrefix`                    | `version.tagPrefix`                    | `v`                                            | The prefix for release tags.                                                                                         |
+| `tagSuffix`                    | `version.tagSuffix`                    |                                                | The suffix for release tags.                                                                                         |
+| `generateBackupPoms`           | `generateBackupPoms`                   | `false`                                        | Indicates whether or not to generate backup POMs when changes are made.                                              |
+| `releaseCommitMessagePattern`  | `version.releaseCommitMessagePattern`  | `[version]`                                    | The commit message to use for releases. The placeholder `[version]` will be replaced with the actual version number. |
+| `snapshotCommitMessagePattern` | `version.snapshotCommitMessagePattern` | `Preparing for the next development iteration` | The commit message to use for snapshots.                                                                             |
+| `releaseFilePatternsToAdd`     | `version.releaseFilePatternsToAdd`     | `.`                                            | File patterns to add to the Git index before committing the release.                                                 |
+| `snapshotFilePatternsToAdd`    | `version.snapshotFilePatternsToAdd`    | `.`                                            | File patterns to add to the Git index before committing the snapshot.                                                |
+
+
 ## Signed commits
 
 There is an issue with signed commits. JGit (the underlying library for managing Git operations) does not have support for GPG 2.2 file format. The file, `~/.gnupg/pubring.kbx` will be considered empty. A workaround for this is the following command, which will provide an older format:

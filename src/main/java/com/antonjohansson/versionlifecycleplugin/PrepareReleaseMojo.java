@@ -42,7 +42,7 @@ public class PrepareReleaseMojo extends AbstractVersionMojo
     @Parameter(name = "tagSuffix", property = "version.tagSuffix")
     private String tagSuffix;
 
-    @Parameter(property = "generateBackupPoms", defaultValue = "false")
+    @Parameter(name = "generateBackupPoms", property = "generateBackupPoms", defaultValue = "false")
     private boolean generateBackupPoms;
 
     @Override
