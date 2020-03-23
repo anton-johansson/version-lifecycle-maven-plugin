@@ -28,5 +28,4 @@ jobs:
           key: maven-repository-{{ checksum "pom.xml" }}
           paths:
             - ~/.m2
-      - run: mvn verify || cat target/it/bump-major-version/build.log
       - run: mvn verify
