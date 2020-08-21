@@ -27,22 +27,22 @@ import com.github.zafarkhaja.semver.Version;
 @Mojo(name = "prepare-release")
 public class PrepareReleaseMojo extends AbstractVersionMojo
 {
-    @Parameter(name = "major")
+    @Parameter(property = "major")
     private boolean major;
 
-    @Parameter(name = "minor")
+    @Parameter(property = "minor")
     private boolean minor;
 
-    @Parameter(name = "patch")
+    @Parameter(property = "patch")
     private boolean patch;
 
-    @Parameter(name = "tagPrefix", property = "version.tagPrefix", defaultValue = "v")
+    @Parameter(property = "version.tagPrefix", defaultValue = "v")
     private String tagPrefix;
 
-    @Parameter(name = "tagSuffix", property = "version.tagSuffix")
+    @Parameter(property = "version.tagSuffix")
     private String tagSuffix;
 
-    @Parameter(name = "generateBackupPoms", property = "generateBackupPoms", defaultValue = "false")
+    @Parameter(property = "generateBackupPoms", defaultValue = "false")
     private boolean generateBackupPoms;
 
     @Override
