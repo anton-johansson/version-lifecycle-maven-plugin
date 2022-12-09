@@ -12,6 +12,19 @@ This project is still during beta, but feel free to use it to test it out!
 
 ## Usage
 
+```xml
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.anton-johansson</groupId>
+                <artifactId>version-lifecycle-maven-plugin</artifactId>
+                <version>0.2.0</version>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
+```
+
 ### Major versions
 
 ```shell
