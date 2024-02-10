@@ -32,6 +32,7 @@ import org.codehaus.plexus.components.interactivity.PrompterException;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.UnsupportedCredentialItem;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.CredentialItem;
@@ -174,6 +175,19 @@ abstract class AbstractVersionMojo extends AbstractMojo
             throw new MojoExecutionException("Could not create tag", e);
         }
     }
+
+    protected boolean hasUncommittedChanges() throws MojoExecutionException
+    {
+        try (Git repository = repository())
+        {
+            return !repository.status().call().getUncommittedChanges().isEmpty();
+        }
+        catch (GitAPIException e)
+        {
+            throw new MojoExecutionException("Could not retrieve uncommitted changes", e);
+        }
+    }
+
     /**
      * Prompts for GPG passphrases.
      */

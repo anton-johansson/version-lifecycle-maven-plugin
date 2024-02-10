@@ -39,6 +39,7 @@
                     <phase>version</phase>
                 </phases>
                 <default-phases>
+                    <version-validate>com.anton-johansson:version-lifecycle-maven-plugin:validate</version-validate>
                     <version-prepare-release>com.anton-johansson:version-lifecycle-maven-plugin:prepare-release</version-prepare-release>
                     <version-prepare-release-version>org.codehaus.mojo:versions-maven-plugin:2.7:set</version-prepare-release-version>
                     <version-prepare-release-tag>org.codehaus.mojo:versions-maven-plugin:2.7:set-scm-tag</version-prepare-release-tag>
