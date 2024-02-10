@@ -17,22 +17,23 @@ package com.antonjohansson.versionlifecycleplugin;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Prepares the snapshot. Binds to the {@code version-prepare-snapshot} phase.
+ * Validates the project. Binds to the {@code version-validate} phase.
  */
-@Mojo(name = "prepare-snapshot")
-public class PrepareSnapshotMojo extends AbstractVersionMojo
+@Mojo(name = "validate")
+public class ValidateMojo extends AbstractVersionMojo
 {
+    @Parameter(name = "checkForUncommittedChanges", property = "version.checkForUncommittedChanges", defaultValue = "true")
+    private boolean checkForUncommittedChanges;
+
     @Override
     public void execute() throws MojoExecutionException
     {
-        if (!patch)
+        if (checkForUncommittedChanges && hasUncommittedChanges())
         {
-            String version = getNextVersion();
-            setOldVersionToAny();
-            setVersion(version);
-            setTag("HEAD");
+            throw new MojoExecutionException("There are uncommitted changes");
         }
     }
 }

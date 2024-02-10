@@ -61,29 +61,29 @@ This project tries to not asume too much about your work flow, but it does assum
 
 Here is an explained table of the whole lifecycle:
 
-| Phase                            | Task                                                                                                          |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| version-validate                 | Does nothing by default. A good place to perform pre-flight checks.                                           |
-| version-prepare-release          | Prepares the lifecycle by finding out the next version for the specified type.                                |
-| version-prepare-release-version  | Sets the `version` attribute in the POM.                                                                      |
-| version-prepare-release-tag      | Sets the `scm.tag` attribute in the POM.                                                                      |
-| version-process-release          | Does nothing by default. A good place to make any pre-commit changes to files, such as generating changelog.  |
-| version-commit-release           | Commits the changes for the release.                                                                          |
-| version-prepare-snapshot         | Prepares the lifecycle by finding out the next development version.                                           |
-| version-prepare-snapshot-version | Sets the `version` attribute in the POM.                                                                      |
-| version-prepare-snapshot-tag     | Sets the `scm.tag` attribute in the POM.                                                                      |
-| version-process-snapshot         | Does nothing by default. A good place to make any pre-commit changes to files.                                |
-| version-commit-snapshot          | Commits the changes for the snapshot version.                                                                 |
-| version                          | Does nothing. Its sole purpose is to provide a neat command to create new versions.                           |
+| Phase                            | Task                                                                                                                    |
+|----------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| version-validate                 | A good place to perform pre-flight checks. By default, does not allow version change, if there are uncommitted changes. |
+| version-prepare-release          | Prepares the lifecycle by finding out the next version for the specified type.                                          |
+| version-prepare-release-version  | Sets the `version` attribute in the POM.                                                                                |
+| version-prepare-release-tag      | Sets the `scm.tag` attribute in the POM.                                                                                |
+| version-process-release          | Does nothing by default. A good place to make any pre-commit changes to files, such as generating changelog.            |
+| version-commit-release           | Commits the changes for the release.                                                                                    |
+| version-prepare-snapshot         | Prepares the lifecycle by finding out the next development version.                                                     |
+| version-prepare-snapshot-version | Sets the `version` attribute in the POM.                                                                                |
+| version-prepare-snapshot-tag     | Sets the `scm.tag` attribute in the POM.                                                                                |
+| version-process-snapshot         | Does nothing by default. A good place to make any pre-commit changes to files.                                          |
+| version-commit-snapshot          | Commits the changes for the snapshot version.                                                                           |
+| version                          | Does nothing. Its sole purpose is to provide a neat command to create new versions.                                     |
 
 
 ## Parameters
 
 | Name                           | Property                               | Default value                                  | Description                                                                                                          |
-| ------------------------------ | -------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+|--------------------------------|----------------------------------------|------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
 | `major`                        |                                        |                                                | Triggers a major version bump. Mutually exclusive with `minor` and `patch`.                                          |
-| `minor`                        |                                        |                                                | Triggers a major version bump. Mutually exclusive with `major` and `patch`.                                          |
-| `patch`                        |                                        |                                                | Triggers a major version bump. Mutually exclusive with `major` and `minor`.                                          |
+| `minor`                        |                                        |                                                | Triggers a minor version bump. Mutually exclusive with `major` and `patch`.                                          |
+| `patch`                        |                                        |                                                | Triggers a patch version bump. Mutually exclusive with `major` and `minor`.                                          |
 | `tagPrefix`                    | `version.tagPrefix`                    | `v`                                            | The prefix for release tags.                                                                                         |
 | `tagSuffix`                    | `version.tagSuffix`                    |                                                | The suffix for release tags.                                                                                         |
 | `generateBackupPoms`           | `generateBackupPoms`                   | `false`                                        | Indicates whether or not to generate backup POMs when changes are made.                                              |
@@ -91,6 +91,7 @@ Here is an explained table of the whole lifecycle:
 | `snapshotCommitMessagePattern` | `version.snapshotCommitMessagePattern` | `Preparing for the next development iteration` | The commit message to use for snapshots.                                                                             |
 | `releaseFilePatternsToAdd`     | `version.releaseFilePatternsToAdd`     | `.`                                            | File patterns to add to the Git index before committing the release.                                                 |
 | `snapshotFilePatternsToAdd`    | `version.snapshotFilePatternsToAdd`    | `.`                                            | File patterns to add to the Git index before committing the snapshot.                                                |
+| `checkForUncommittedChanges`   | `checkForUncommittedChanges`           | `true`                                         | Checks for uncommitted changes and aborts, if there are any.                                                         |
 
 
 ## Signed commits

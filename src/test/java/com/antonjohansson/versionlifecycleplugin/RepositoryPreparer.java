@@ -21,6 +21,9 @@ import static org.apache.commons.io.FileUtils.moveFile;
 import java.io.File;
 import java.io.IOException;
 
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+
 /**
  * Prepares repositories.
  */
@@ -52,6 +55,7 @@ public class RepositoryPreparer
     {
         move("git");
         move("gitignore");
+        commitEverything();
     }
 
     private void move(String fileName) throws IOException
@@ -66,5 +70,13 @@ public class RepositoryPreparer
         {
             moveFile(source, destination);
         }
+    }
+
+    private void commitEverything() throws IOException, GitAPIException
+    {
+        File directory = new File(repository.getPath());
+        Git git = Git.open(directory);
+        git.add().addFilepattern(".").call();
+        git.commit().setMessage("Initial commit").call();
     }
 }
