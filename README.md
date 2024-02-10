@@ -80,10 +80,10 @@ Here is an explained table of the whole lifecycle:
 ## Parameters
 
 | Name                           | Property                               | Default value                                  | Description                                                                                                          |
-| ------------------------------ | -------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+|--------------------------------|----------------------------------------|------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
 | `major`                        |                                        |                                                | Triggers a major version bump. Mutually exclusive with `minor` and `patch`.                                          |
-| `minor`                        |                                        |                                                | Triggers a major version bump. Mutually exclusive with `major` and `patch`.                                          |
-| `patch`                        |                                        |                                                | Triggers a major version bump. Mutually exclusive with `major` and `minor`.                                          |
+| `minor`                        |                                        |                                                | Triggers a minor version bump. Mutually exclusive with `major` and `patch`.                                          |
+| `patch`                        |                                        |                                                | Triggers a patch version bump. Mutually exclusive with `major` and `minor`.                                          |
 | `tagPrefix`                    | `version.tagPrefix`                    | `v`                                            | The prefix for release tags.                                                                                         |
 | `tagSuffix`                    | `version.tagSuffix`                    |                                                | The suffix for release tags.                                                                                         |
 | `generateBackupPoms`           | `generateBackupPoms`                   | `false`                                        | Indicates whether or not to generate backup POMs when changes are made.                                              |
