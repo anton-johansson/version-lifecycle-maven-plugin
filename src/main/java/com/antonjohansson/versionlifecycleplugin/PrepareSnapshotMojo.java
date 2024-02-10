@@ -28,6 +28,7 @@ public class PrepareSnapshotMojo extends AbstractVersionMojo
     public void execute() throws MojoExecutionException
     {
         String version = getNextVersion();
+        setOldVersionToAny();
         setVersion(version);
         setTag("HEAD");
     }

@@ -46,6 +46,7 @@ import org.eclipse.jgit.transport.URIish;
  */
 abstract class AbstractVersionMojo extends AbstractMojo
 {
+    private static final String OLD_VERSION = "oldVersion";
     private static final String VERSION = "newVersion";
     private static final String TAG = "newTag";
     private static final String NEXT_VERSION = "com.antonjohansson.versionlifecycleplugin.NextVersion";
@@ -75,6 +76,11 @@ abstract class AbstractVersionMojo extends AbstractMojo
     protected void setVersion(String version)
     {
         project.getProperties().setProperty(VERSION, version);
+    }
+
+    protected void setOldVersionToAny()
+    {
+        project.getProperties().setProperty(OLD_VERSION, "*");
     }
 
     protected String getTag()
