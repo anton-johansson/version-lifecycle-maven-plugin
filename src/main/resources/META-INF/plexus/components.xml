@@ -39,13 +39,14 @@
                     <phase>version</phase>
                 </phases>
                 <default-phases>
+                    <version-validate>com.anton-johansson:version-lifecycle-maven-plugin:validate</version-validate>
                     <version-prepare-release>com.anton-johansson:version-lifecycle-maven-plugin:prepare-release</version-prepare-release>
-                    <version-prepare-release-version>org.codehaus.mojo:versions-maven-plugin:2.7:set</version-prepare-release-version>
-                    <version-prepare-release-tag>org.codehaus.mojo:versions-maven-plugin:2.7:set-scm-tag</version-prepare-release-tag>
+                    <version-prepare-release-version>org.codehaus.mojo:versions-maven-plugin:2.16.2:set</version-prepare-release-version>
+                    <version-prepare-release-tag>org.codehaus.mojo:versions-maven-plugin:2.16.2:set-scm-tag</version-prepare-release-tag>
                     <version-commit-release>com.anton-johansson:version-lifecycle-maven-plugin:commit-release</version-commit-release>
                     <version-prepare-snapshot>com.anton-johansson:version-lifecycle-maven-plugin:prepare-snapshot</version-prepare-snapshot>
-                    <version-prepare-snapshot-version>org.codehaus.mojo:versions-maven-plugin:2.7:set</version-prepare-snapshot-version>
-                    <version-prepare-snapshot-tag>org.codehaus.mojo:versions-maven-plugin:2.7:set-scm-tag</version-prepare-snapshot-tag>
+                    <version-prepare-snapshot-version>org.codehaus.mojo:versions-maven-plugin:2.16.2:set</version-prepare-snapshot-version>
+                    <version-prepare-snapshot-tag>org.codehaus.mojo:versions-maven-plugin:2.16.2:set-scm-tag</version-prepare-snapshot-tag>
                     <version-commit-snapshot>com.anton-johansson:version-lifecycle-maven-plugin:commit-snapshot</version-commit-snapshot>
                     <version-summary>com.anton-johansson:version-lifecycle-maven-plugin:summary</version-summary>
                 </default-phases>

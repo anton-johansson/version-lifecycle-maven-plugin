@@ -32,6 +32,7 @@ import org.codehaus.plexus.components.interactivity.PrompterException;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.UnsupportedCredentialItem;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.CredentialItem;
@@ -45,12 +46,23 @@ import org.eclipse.jgit.transport.URIish;
  */
 abstract class AbstractVersionMojo extends AbstractMojo
 {
+    private static final String OLD_VERSION = "oldVersion";
     private static final String VERSION = "newVersion";
     private static final String TAG = "newTag";
     private static final String NEXT_VERSION = "com.antonjohansson.versionlifecycleplugin.NextVersion";
+    private static final String RELEASE_VERSION = "com.antonjohansson.versionlifecycleplugin.ReleaseVersion";
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
+
+    @Parameter(property = "major")
+    boolean major;
+
+    @Parameter(property = "minor")
+    boolean minor;
+
+    @Parameter(property = "patch")
+    boolean patch;
 
     @Component
     private Prompter prompter;
@@ -75,6 +87,11 @@ abstract class AbstractVersionMojo extends AbstractMojo
         project.getProperties().setProperty(VERSION, version);
     }
 
+    protected void setOldVersionToAny()
+    {
+        project.getProperties().setProperty(OLD_VERSION, "*");
+    }
+
     protected String getTag()
     {
         return project.getProperties().getProperty(TAG);
@@ -93,6 +110,28 @@ abstract class AbstractVersionMojo extends AbstractMojo
     protected void setNextVersion(String nextVersion)
     {
         project.getProperties().setProperty(NEXT_VERSION, nextVersion);
+    }
+
+    protected String getReleaseVersion()
+    {
+        return project.getProperties().getProperty(RELEASE_VERSION);
+    }
+
+    protected void setReleaseVersion(String releaseVersion)
+    {
+        project.getProperties().setProperty(RELEASE_VERSION, releaseVersion);
+    }
+
+    protected String getCurrentBranch() throws MojoExecutionException
+    {
+        try (Git repository = repository())
+        {
+            return repository.getRepository().getBranch();
+        }
+        catch (IOException e)
+        {
+            throw new MojoExecutionException("Could not retrieve current branch", e);
+        }
     }
 
     protected Git repository() throws MojoExecutionException
@@ -151,6 +190,19 @@ abstract class AbstractVersionMojo extends AbstractMojo
             throw new MojoExecutionException("Could not create tag", e);
         }
     }
+
+    protected boolean hasUncommittedChanges() throws MojoExecutionException
+    {
+        try (Git repository = repository())
+        {
+            return !repository.status().call().getUncommittedChanges().isEmpty();
+        }
+        catch (GitAPIException e)
+        {
+            throw new MojoExecutionException("Could not retrieve uncommitted changes", e);
+        }
+    }
+
     /**
      * Prompts for GPG passphrases.
      */

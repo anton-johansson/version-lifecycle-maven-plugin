@@ -37,15 +37,18 @@ public class CommitSnapshotMojo extends AbstractVersionMojo
     @Override
     public void execute() throws MojoExecutionException
     {
-        Git repository = repository();
+        if (!patch)
+        {
+            Git repository = repository();
 
-        String version = getVersion();
-        String message = snapshotCommitMessagePattern.replace("[version]", version);
+            String version = getVersion();
+            String message = snapshotCommitMessagePattern.replace("[version]", version);
 
-        getLog().info("Adding files to commit with patterns: " + snapshotFilePatternsToAdd);
-        add(repository, snapshotFilePatternsToAdd);
+            getLog().info("Adding files to commit with patterns: " + snapshotFilePatternsToAdd);
+            add(repository, snapshotFilePatternsToAdd);
 
-        getLog().info("Committing snapshot with message: " + message);
-        commit(repository, message);
+            getLog().info("Committing snapshot with message: " + message);
+            commit(repository, message);
+        }
     }
 }
