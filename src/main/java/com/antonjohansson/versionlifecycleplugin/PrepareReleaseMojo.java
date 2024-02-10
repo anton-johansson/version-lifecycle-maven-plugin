@@ -79,6 +79,7 @@ public class PrepareReleaseMojo extends AbstractVersionMojo
 
         setProperty("generateBackupPoms", String.valueOf(generateBackupPoms));
         setVersion(version.toString());
+        setReleaseVersion(version.toString());
         setTag(tag);
         setNextVersion(nextVersion.toString());
     }

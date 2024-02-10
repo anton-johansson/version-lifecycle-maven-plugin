@@ -48,6 +48,7 @@ abstract class AbstractVersionMojo extends AbstractMojo
     private static final String VERSION = "newVersion";
     private static final String TAG = "newTag";
     private static final String NEXT_VERSION = "com.antonjohansson.versionlifecycleplugin.NextVersion";
+    private static final String RELEASE_VERSION = "com.antonjohansson.versionlifecycleplugin.ReleaseVersion";
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
@@ -93,6 +94,28 @@ abstract class AbstractVersionMojo extends AbstractMojo
     protected void setNextVersion(String nextVersion)
     {
         project.getProperties().setProperty(NEXT_VERSION, nextVersion);
+    }
+
+    protected String getReleaseVersion()
+    {
+        return project.getProperties().getProperty(RELEASE_VERSION);
+    }
+
+    protected void setReleaseVersion(String releaseVersion)
+    {
+        project.getProperties().setProperty(RELEASE_VERSION, releaseVersion);
+    }
+
+    protected String getCurrentBranch() throws MojoExecutionException
+    {
+        try (Git repository = repository())
+        {
+            return repository.getRepository().getBranch();
+        }
+        catch (IOException e)
+        {
+            throw new MojoExecutionException("Could not retrieve current branch", e);
+        }
     }
 
     protected Git repository() throws MojoExecutionException
