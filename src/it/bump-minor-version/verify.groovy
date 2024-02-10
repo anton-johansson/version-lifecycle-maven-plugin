@@ -16,7 +16,7 @@
 
 def asserter = com.antonjohansson.versionlifecycleplugin.RepositoryAsserter.repository("target/it/bump-minor-version")
 
-assert asserter.commitCount == 3
+assert asserter.commitCount == 4
 assert asserter.uncommittedChanges == 0
 assert asserter.numberOfTags == 1
 assert asserter.getTagNameOf(1) == "refs/tags/v1.1.0"
