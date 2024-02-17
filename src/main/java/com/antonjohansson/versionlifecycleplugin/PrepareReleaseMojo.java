@@ -15,6 +15,8 @@
  */
 package com.antonjohansson.versionlifecycleplugin;
 
+import java.util.Optional;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -27,15 +29,6 @@ import com.github.zafarkhaja.semver.Version;
 @Mojo(name = "prepare-release")
 public class PrepareReleaseMojo extends AbstractVersionMojo
 {
-    @Parameter(property = "major")
-    private boolean major;
-
-    @Parameter(property = "minor")
-    private boolean minor;
-
-    @Parameter(property = "patch")
-    private boolean patch;
-
     @Parameter(property = "version.tagPrefix", defaultValue = "v")
     private String tagPrefix;
 
@@ -68,13 +61,13 @@ public class PrepareReleaseMojo extends AbstractVersionMojo
         Version nextVersion = version;
         if ("patch".equals(type))
         {
-            nextVersion = nextVersion.incrementPatchVersion();
+            nextVersion = nextVersion.nextPatchVersion();
         }
         else
         {
-            nextVersion = nextVersion.incrementMinorVersion();
+            nextVersion = nextVersion.nextMinorVersion();
         }
-        nextVersion = nextVersion.setPreReleaseVersion("SNAPSHOT");
+        nextVersion = nextVersion.toBuilder().addPreReleaseIdentifiers("SNAPSHOT").build();
         getLog().info("Next version will be " + nextVersion.toString());
 
         setProperty("generateBackupPoms", String.valueOf(generateBackupPoms));
@@ -87,10 +80,12 @@ public class PrepareReleaseMojo extends AbstractVersionMojo
     private Version getVersion(String type) throws MojoExecutionException
     {
         Version current = extractVersion();
-        int major = current.getMajorVersion();
-        int minor = current.getMinorVersion();
-        int patch = current.getPatchVersion();
-        boolean snapshot = "SNAPSHOT".equals(current.getPreReleaseVersion());
+        long major = current.majorVersion();
+        long minor = current.minorVersion();
+        long patch = current.patchVersion();
+
+        Optional<String> preReleaseVersion = current.preReleaseVersion();
+        boolean snapshot = preReleaseVersion.isPresent() && "SNAPSHOT".equals(preReleaseVersion.get());
 
         if ("major".equals(type))
         {
@@ -118,7 +113,7 @@ public class PrepareReleaseMojo extends AbstractVersionMojo
             }
         }
 
-        return Version.forIntegers(major, minor, patch);
+        return Version.of(major, minor, patch);
     }
 
     private Version extractVersion() throws MojoExecutionException
@@ -126,7 +121,7 @@ public class PrepareReleaseMojo extends AbstractVersionMojo
         String version = model().getVersion();
         try
         {
-            return Version.valueOf(version);
+            return Version.parse(version);
         }
         catch (Exception e)
         {
@@ -134,7 +129,7 @@ public class PrepareReleaseMojo extends AbstractVersionMojo
         }
     }
 
-    private void checkPatch(String type, int patch) throws MojoExecutionException
+    private void checkPatch(String type, long patch) throws MojoExecutionException
     {
         if (patch > 0)
         {

@@ -16,17 +16,12 @@
 
 def asserter = com.antonjohansson.versionlifecycleplugin.RepositoryAsserter.repository("target/it/bump-patch-version")
 
-assert asserter.commitCount == 4
+assert asserter.commitCount == 3
 assert asserter.uncommittedChanges == 0
 assert asserter.numberOfTags == 2
 assert asserter.getTagNameOf(1) == "refs/tags/v1.0.2"
 assert asserter.getTagNameOf(2) == "refs/tags/v1.0.3"
 
-assert asserter.currentCommitMessage == "Preparing for the next development iteration"
-assert asserter.project.version == "1.0.4-SNAPSHOT"
-assert asserter.project.scm.tag == "HEAD"
-
-asserter.reset(1)
 assert asserter.currentCommitMessage == "1.0.3"
 assert asserter.project.version == "1.0.3"
 assert asserter.project.scm.tag == "v1.0.3"

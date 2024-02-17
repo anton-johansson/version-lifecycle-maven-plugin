@@ -25,8 +25,8 @@ import org.apache.maven.plugins.annotations.Parameter;
 @Mojo(name = "validate")
 public class ValidateMojo extends AbstractVersionMojo
 {
-    @Parameter(defaultValue = "${checkForUncommittedChanges}")
-    boolean checkForUncommittedChanges = true;
+    @Parameter(name = "checkForUncommittedChanges", property = "version.checkForUncommittedChanges", defaultValue = "true")
+    private boolean checkForUncommittedChanges;
 
     @Override
     public void execute() throws MojoExecutionException

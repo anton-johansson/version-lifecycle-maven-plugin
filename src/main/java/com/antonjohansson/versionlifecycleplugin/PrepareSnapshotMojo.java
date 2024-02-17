@@ -27,9 +27,12 @@ public class PrepareSnapshotMojo extends AbstractVersionMojo
     @Override
     public void execute() throws MojoExecutionException
     {
-        String version = getNextVersion();
-        setOldVersionToAny();
-        setVersion(version);
-        setTag("HEAD");
+        if (!patch)
+        {
+            String version = getNextVersion();
+            setOldVersionToAny();
+            setVersion(version);
+            setTag("HEAD");
+        }
     }
 }

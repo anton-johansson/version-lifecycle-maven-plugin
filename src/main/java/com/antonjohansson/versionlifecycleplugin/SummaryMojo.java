@@ -28,6 +28,13 @@ public class SummaryMojo extends AbstractVersionMojo
     public void execute() throws MojoExecutionException
     {
         getLog().info("Version is complete");
-        getLog().info("Run 'git push origin " + getCurrentBranch() + " && git push origin v" + getReleaseVersion() + "' to push your version");
+        if (!patch)
+        {
+            getLog().info("Run 'git push origin " + getCurrentBranch() + " && git push origin v" + getReleaseVersion() + "' to push your version");
+        }
+        else
+        {
+            getLog().info("Run 'git push origin v" + getReleaseVersion() + "' to push your version");
+        }
     }
 }

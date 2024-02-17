@@ -55,6 +55,15 @@ abstract class AbstractVersionMojo extends AbstractMojo
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
 
+    @Parameter(property = "major")
+    boolean major;
+
+    @Parameter(property = "minor")
+    boolean minor;
+
+    @Parameter(property = "patch")
+    boolean patch;
+
     @Component
     private Prompter prompter;
 
