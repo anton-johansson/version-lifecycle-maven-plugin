@@ -146,7 +146,7 @@
             <plugin>
                 <groupId>com.anton-johansson</groupId>
                 <artifactId>version-lifecycle-maven-plugin</artifactId>
-                <version>0.2.0</version>
+                <version>1.0.0</version>
                 <extensions>true</extensions>
             </plugin>
             <plugin>

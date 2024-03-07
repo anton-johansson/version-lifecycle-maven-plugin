@@ -7,7 +7,7 @@ This Maven plugin aims to provide a better experience regarding version manageme
 
 ## Maturity
 
-This project is still during beta, but feel free to use it to test it out!
+This project has reached stable and version `1.0.0` has been released.
 
 
 ## Usage
@@ -18,7 +18,7 @@ This project is still during beta, but feel free to use it to test it out!
             <plugin>
                 <groupId>com.anton-johansson</groupId>
                 <artifactId>version-lifecycle-maven-plugin</artifactId>
-                <version>0.2.0</version>
+                <version>1.0.0</version>
                 <extensions>true</extensions>
             </plugin>
         </plugins>
@@ -105,7 +105,13 @@ $ gpg --export > ~/.gnupg/pubring.gpg
 
 ## Release
 
-For releasing this project, use:
+For releasing this project, you can use the project iself to create a new tag:
+
+```shell
+$ mvn version -Dminor
+```
+
+However, we have no automatic CI pipeline that deploys the artifacts. To do that, use:
 
 ```shell
 $ git checkout <tag to deploy>
