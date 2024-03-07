@@ -25,6 +25,13 @@
     <version>0.3.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>Version lifecycle plugin</name>
+    <description>
+        This Maven plugin aims to provide a better experience regarding version management in Maven.
+        It does this by introducing a new lifecycle. This allows to bump major, minor or patch version
+        numbers with a simple command while still being able to run other plugins during the creation
+        of the version. Output generated from these plugins can easily be added and included in the
+        release tag.
+    </description>
     <url>https://github.com/anton-johansson/version-lifecycle-maven-plugin</url>
 
     <properties>
