@@ -1,6 +1,6 @@
 # Version lifecycle plugin
 
-[![GitHub actions](https://github.com/anton-johansson/version-lifecycle-maven-plugin/actions/workflows/maven.yml/badge.svg)](https://github.com/anton-johansson/version-lifecycle-maven-plugin/actions)
+[![GitHub actions](https://github.com/anton-johansson/version-lifecycle-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/anton-johansson/version-lifecycle-maven-plugin/actions)
 
 This Maven plugin aims to provide a better experience regarding version management in Maven. It does this by introducing a new lifecycle. This allows to bump major, minor or patch version numbers with a simple command while still being able to run other plugins during the creation of the version. Output generated from these plugins can easily be added and included in the release tag.
 
