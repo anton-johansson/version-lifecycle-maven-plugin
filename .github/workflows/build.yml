@@ -33,7 +33,7 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-      - name: Install the artifact (the tests need the artifact to me in the .m2 repository)
+      - name: Install the artifact (the tests need the artifact to be in the .m2 repository)
         run: mvn -B install --file pom.xml -DskipTests
-      - name: Test and package
-        run: mvn -B verify package --file pom.xml
+      - name: Test
+        run: mvn -B verify package --file pom.xml -Dmaven.source.skip -Dmaven.javadoc.skip
