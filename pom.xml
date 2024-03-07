@@ -43,6 +43,12 @@
             <url>https://anton-johansson.com</url>
             <email>hello@anton-johansson.com</email>
         </developer>
+        <developer>
+            <id>erikbrudzinskis</id>
+            <name>Erik Brudzinskis</name>
+            <url>https://erik-brudzinskis.com</url>
+            <email>brudzinskise@gmail.com</email>
+        </developer>
     </developers>
 
     <licenses>
