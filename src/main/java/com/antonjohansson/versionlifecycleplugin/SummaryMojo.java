@@ -15,7 +15,6 @@
  */
 package com.antonjohansson.versionlifecycleplugin;
 
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 
@@ -23,12 +22,19 @@ import org.apache.maven.plugins.annotations.Mojo;
  * Prints summary and instructions for pushing your version. Binds to the {@code summary} phase.
  */
 @Mojo(name = "summary")
-public class SummaryMojo extends AbstractMojo
+public class SummaryMojo extends AbstractVersionMojo
 {
     @Override
     public void execute() throws MojoExecutionException
     {
         getLog().info("Version is complete");
-        getLog().info("Run 'git push origin master && git push origin v1.0.0' to push your version");
+        if (!patch)
+        {
+            getLog().info("Run 'git push origin " + getCurrentBranch() + " && git push origin v" + getReleaseVersion() + "' to push your version");
+        }
+        else
+        {
+            getLog().info("Run 'git push origin v" + getReleaseVersion() + "' to push your version");
+        }
     }
 }
