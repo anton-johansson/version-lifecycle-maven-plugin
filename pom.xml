@@ -137,6 +137,12 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>com.anton-johansson</groupId>
+                <artifactId>version-lifecycle-maven-plugin</artifactId>
+                <version>0.2.0</version>
+                <extensions>true</extensions>
+            </plugin>
+            <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
                 <version>3.0</version>
