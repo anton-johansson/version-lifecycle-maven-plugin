@@ -10,6 +10,11 @@ This Maven plugin aims to provide a better experience regarding version manageme
 This project has reached stable and version `1.0.0` has been released.
 
 
+## Requirements
+
+Maven must run on Java 17 or later. JGit, which the plugin uses for all Git operations, requires Java 17 from version 7.0.0.
+
+
 ## Usage
 
 ```xml
@@ -96,7 +101,19 @@ Here is an explained table of the whole lifecycle:
 
 ## Signed commits
 
-There is an issue with signed commits. JGit (the underlying library for managing Git operations) does not have support for GPG 2.2 file format. The file, `~/.gnupg/pubring.kbx` will be considered empty. A workaround for this is the following command, which will provide an older format:
+The plugin signs the release commit and the snapshot commit when Git is configured to sign commits. Both `gpg.format=ssh` and `gpg.format=openpgp` are supported.
+
+To sign with an SSH key, configure Git as usual:
+
+```shell
+$ git config --global gpg.format ssh
+$ git config --global user.signingkey ~/.ssh/id_ed25519.pub
+$ git config --global commit.gpgsign true
+```
+
+### The GPG 2.2 keybox format
+
+JGit (the underlying library for managing Git operations) does not have support for GPG 2.2 file format. The file, `~/.gnupg/pubring.kbx` will be considered empty. A workaround for this is the following command, which will provide an older format:
 
 ```shell
 $ gpg --export > ~/.gnupg/pubring.gpg
