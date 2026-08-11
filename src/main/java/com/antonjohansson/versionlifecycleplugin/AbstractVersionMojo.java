@@ -32,8 +32,11 @@ import org.codehaus.plexus.components.interactivity.PrompterException;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.TagCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.UnsupportedCredentialItem;
+import org.eclipse.jgit.lib.GpgConfig;
+import org.eclipse.jgit.lib.GpgConfig.GpgFormat;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.CredentialItem;
 import org.eclipse.jgit.transport.CredentialItem.CharArrayType;
@@ -52,6 +55,12 @@ abstract class AbstractVersionMojo extends AbstractMojo
     private static final String NEXT_VERSION = "com.antonjohansson.versionlifecycleplugin.NextVersion";
     private static final String RELEASE_VERSION = "com.antonjohansson.versionlifecycleplugin.ReleaseVersion";
 
+    /**
+     * JGit reads {@code gpg.format} even when it does not sign, and it rejects the value {@code ssh}. This
+     * configuration replaces the one from the repository, which keeps the value out of JGit.
+     */
+    private static final GpgConfig UNSIGNED = new GpgConfig(null, GpgFormat.OPENPGP, null);
+
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
 
@@ -63,6 +72,9 @@ abstract class AbstractVersionMojo extends AbstractMojo
 
     @Parameter(property = "patch")
     boolean patch;
+
+    @Parameter(name = "sign", property = "version.sign", defaultValue = "false")
+    private boolean sign;
 
     @Component
     private Prompter prompter;
@@ -170,6 +182,10 @@ abstract class AbstractVersionMojo extends AbstractMojo
         {
             CommitCommand command = repository.commit();
             command.setCredentialsProvider(new PassphrasePrompter(getLog(), prompter));
+            if (!sign)
+            {
+                command.setGpgConfig(UNSIGNED).setSign(Boolean.FALSE);
+            }
             RevCommit commit = command.setMessage(message).call();
             getLog().info("Generated commit SHA " + commit.getId().getName());
         }
@@ -183,7 +199,12 @@ abstract class AbstractVersionMojo extends AbstractMojo
     {
         try
         {
-            repository.tag().setName(tag).call();
+            TagCommand command = repository.tag().setName(tag);
+            if (!sign)
+            {
+                command.setGpgConfig(UNSIGNED).setSigned(false);
+            }
+            command.call();
         }
         catch (Exception e)
         {
