@@ -92,20 +92,13 @@ Here is an explained table of the whole lifecycle:
 | `releaseFilePatternsToAdd`     | `version.releaseFilePatternsToAdd`     | `.`                                            | File patterns to add to the Git index before committing the release.                                                 |
 | `snapshotFilePatternsToAdd`    | `version.snapshotFilePatternsToAdd`    | `.`                                            | File patterns to add to the Git index before committing the snapshot.                                                |
 | `checkForUncommittedChanges`   | `checkForUncommittedChanges`           | `true`                                         | Checks for uncommitted changes and aborts, if there are any.                                                         |
-| `sign`                         | `version.sign`                         | `false`                                        | Lets JGit sign the release commit, the snapshot commit and the tag, according to the Git configuration.              |
 
 
 ## Signed commits
 
-The plugin does not sign the commits and the tag it creates. It ignores `commit.gpgsign`, `tag.gpgsign` and `tag.forceSignAnnotated` from your Git configuration, so a repository that signs every commit still releases. To let JGit sign them, set the `sign` parameter to `true`.
+The plugin does not sign the commits and the tag it creates. It ignores `commit.gpgsign`, `tag.gpgsign` and `tag.forceSignAnnotated` from your Git configuration, so a repository that signs every commit still releases.
 
-> JGit does not support `gpg.format=ssh`. If you sign with an SSH key, leave `sign` at `false`. Support for SSH signing arrived in JGit 7.1.0, which requires Java 17.
-
-There is an issue with signed commits. JGit (the underlying library for managing Git operations) does not have support for GPG 2.2 file format. The file, `~/.gnupg/pubring.kbx` will be considered empty. A workaround for this is the following command, which will provide an older format:
-
-```shell
-$ gpg --export > ~/.gnupg/pubring.gpg
-```
+JGit 6 (the library the plugin uses for Git operations) has no support for `gpg.format=ssh`. Without an explicit unsigned configuration, JGit would parse that value even when it is not signing, and the release would fail with `Invalid value: gpg.format=ssh`. SSH signing arrived in JGit 7.1.0, which requires Java 17.
 
 
 ## Release

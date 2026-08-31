@@ -73,9 +73,6 @@ abstract class AbstractVersionMojo extends AbstractMojo
     @Parameter(property = "patch")
     boolean patch;
 
-    @Parameter(name = "sign", property = "version.sign", defaultValue = "false")
-    private boolean sign;
-
     @Component
     private Prompter prompter;
 
@@ -182,10 +179,7 @@ abstract class AbstractVersionMojo extends AbstractMojo
         {
             CommitCommand command = repository.commit();
             command.setCredentialsProvider(new PassphrasePrompter(getLog(), prompter));
-            if (!sign)
-            {
-                command.setGpgConfig(UNSIGNED).setSign(Boolean.FALSE);
-            }
+            command.setGpgConfig(UNSIGNED).setSign(Boolean.FALSE);
             RevCommit commit = command.setMessage(message).call();
             getLog().info("Generated commit SHA " + commit.getId().getName());
         }
@@ -200,10 +194,7 @@ abstract class AbstractVersionMojo extends AbstractMojo
         try
         {
             TagCommand command = repository.tag().setName(tag);
-            if (!sign)
-            {
-                command.setGpgConfig(UNSIGNED).setSigned(false);
-            }
+            command.setGpgConfig(UNSIGNED).setSigned(false);
             command.call();
         }
         catch (Exception e)
