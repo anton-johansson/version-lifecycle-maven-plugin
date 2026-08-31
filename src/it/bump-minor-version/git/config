@@ -8,3 +8,5 @@
 	email = some.user@gmail.com
 [commit]
         gpgsign = false
+[gpg]
+	format = ssh
