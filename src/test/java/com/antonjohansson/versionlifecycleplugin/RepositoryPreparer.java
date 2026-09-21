@@ -23,12 +23,17 @@ import java.io.IOException;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.lib.GpgConfig;
 
 /**
  * Prepares repositories.
  */
 public class RepositoryPreparer
 {
+    // The developer can have gpg.format=ssh in the global configuration, which JGit rejects
+    private static final GpgConfig UNSIGNED = new GpgConfig(new Config());
+
     private final File repository;
 
     private RepositoryPreparer(File repository)
@@ -77,6 +82,6 @@ public class RepositoryPreparer
         File directory = new File(repository.getPath());
         Git git = Git.open(directory);
         git.add().addFilepattern(".").call();
-        git.commit().setMessage("Initial commit").call();
+        git.commit().setGpgConfig(UNSIGNED).setMessage("Initial commit").call();
     }
 }

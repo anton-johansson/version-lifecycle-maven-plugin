@@ -34,6 +34,8 @@ import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.UnsupportedCredentialItem;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.lib.GpgConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.CredentialItem;
 import org.eclipse.jgit.transport.CredentialItem.CharArrayType;
@@ -51,6 +53,9 @@ abstract class AbstractVersionMojo extends AbstractMojo
     private static final String TAG = "newTag";
     private static final String NEXT_VERSION = "com.antonjohansson.versionlifecycleplugin.NextVersion";
     private static final String RELEASE_VERSION = "com.antonjohansson.versionlifecycleplugin.ReleaseVersion";
+
+    // JGit rejects gpg.format=ssh when it reads the repository configuration, even for an unsigned commit
+    private static final GpgConfig UNSIGNED = new GpgConfig(new Config());
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
@@ -170,6 +175,7 @@ abstract class AbstractVersionMojo extends AbstractMojo
         {
             CommitCommand command = repository.commit();
             command.setCredentialsProvider(new PassphrasePrompter(getLog(), prompter));
+            command.setGpgConfig(UNSIGNED);
             RevCommit commit = command.setMessage(message).call();
             getLog().info("Generated commit SHA " + commit.getId().getName());
         }
@@ -183,7 +189,7 @@ abstract class AbstractVersionMojo extends AbstractMojo
     {
         try
         {
-            repository.tag().setName(tag).call();
+            repository.tag().setName(tag).setGpgConfig(UNSIGNED).call();
         }
         catch (Exception e)
         {

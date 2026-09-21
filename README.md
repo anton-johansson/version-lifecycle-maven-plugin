@@ -96,11 +96,9 @@ Here is an explained table of the whole lifecycle:
 
 ## Signed commits
 
-There is an issue with signed commits. JGit (the underlying library for managing Git operations) does not have support for GPG 2.2 file format. The file, `~/.gnupg/pubring.kbx` will be considered empty. A workaround for this is the following command, which will provide an older format:
+The plugin does not sign the commits and the tag it creates. It ignores `commit.gpgsign`, `tag.gpgsign` and `tag.forceSignAnnotated` from your Git configuration, so a repository that signs every commit still releases.
 
-```shell
-$ gpg --export > ~/.gnupg/pubring.gpg
-```
+JGit 6 (the library the plugin uses for Git operations) has no support for `gpg.format=ssh`. Without an explicit unsigned configuration, JGit would parse that value even when it is not signing, and the release would fail with `Invalid value: gpg.format=ssh`. SSH signing arrived in JGit 7.1.0, which requires Java 17.
 
 
 ## Release
